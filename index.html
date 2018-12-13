@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Invasive Species</title>
+
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+        integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+        crossorigin=""/>
+
+        <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+        integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+        crossorigin=""></script>
+
+        <script type="text/javascript" src="95.js"></script>
+        <script type="text/javascript" src="'13.js"></script>
+        <script type="text/javascript" src="'02.js"></script>
+        <script type="text/javascript" src="'08.js"></script>
+        
+
+
+        <style type="text/css">
+        html, body { margin: 0; padding: 0; height: 100%; }
+        #map { min-height: 100%; }
+
+
+        /* Optional: adjust the values below to change the appearance of the legend */
+   .legend {
+                padding: 6px 6px;
+                font: 14px/16px Arial, Helvetica, sans-serif;
+                background: white;
+                background: rgba(255,255,255,0.8);
+                box-shadow: 0 0 15px rgba(0,0,0,0.2);
+                border-radius: 3px;
+                width: 150px;
+            }
+            .legend i {
+                  width: 13px;
+                  height: 18px;
+                  float: left;
+                  margin-right: 8px;
+                  opacity: 0.7;
+              }
+            .legend h4 {
+                margin: 0 0 4px;
+                color: #777;
+        </style>
+
+    </head>
+
+    <body>
+        <h4 style="color:slateblue;" align="center">This map represents the sightings over a 23 year period of Alewives, Sea Lamprey, Round Goby, Zebra/Guagga Mussels and Asian Carps all combined, found in the Great Lakes.</h4> 
+        
+        
+        <div id="map"></div>
+
+        <script type="text/javascript">
+
+          var map = L.map('map', {
+              center: [42.22,-85.52],
+              zoom: 6
+
+    });
+
+         var canvas = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+           attribution: 'Map data © OpenStreetMap contributors, CC-BY-SA, Imagery © Mapbox',
+           maxZoom: 15,
+           minZoom: 2,
+           id: 'mapbox.light',
+           accessToken: 'pk.eyJ1IjoiYWNhcmRvbmExMCIsImEiOiJjamxoOHZmMHIwMWRlM3ZveGVpMTNmcWd5In0.HtD59DhTVqtr4vRcUPa4xQ'
+         }).addTo(map);
+
+
+
+        var imagery = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+            attribution: 'Map data © OpenStreetMap contributors, CC-BY-SA, Imagery © Mapbox',
+            maxZoom: 15,
+            minZoom: 2,
+            id: 'mapbox.satellite',
+            accessToken:'pk.eyJ1IjoiY3VyZW1hbmdvIiwiYSI6ImNpcTQ4cGFwbDAxbmVmd25vZGNiOTVzeGEifQ.GWZByYkIft6eMRha69C8nw'
+ });
+      
+
+        one = L.geoJson(data1, {
+
+                  // By default, Leaflet draws geojson points as simple markers
+                  // To alter this, the pointToLayer function needs to be used
+                  pointToLayer: function(feature, latlng) {
+                      return L.circleMarker(latlng, { // we use circle marker for the points
+                          radius:4, 
+                          fillColor: "#c5ff33",  // fill color of the circles
+                          color: '#3390ff',      // border color of the circles
+                          weight: 1.5,             // circle line weight in pixels
+                          fillOpacity: 0.8  // fill opacity (0-1)
+                      }).on({
+                         mouseover: function(e) {
+                            this.openPopup();
+                            this.setStyle({fillColor: 'pink'});  // fill color turns green when mouseover
+                        },
+                        mouseout: function(e) {
+                            this.closePopup();
+                            this.setStyle({fillColor: '#c5ff33'});  // fill turns original color when mouseout
+                        }
+                    });
+                  }
+              }).addTo(map);    
+
+            
+         two  = L.geoJson(data2, {
+
+                  // By default, Leaflet draws geojson points as simple markers
+                  // To alter this, the pointToLayer function needs to be used
+                  pointToLayer: function(feature, latlng) {
+                      return L.circleMarker(latlng, { // we use circle marker for the points
+                           radius:4,
+                          fillColor: "#33f6ff",  // fill color of the circles
+                          color: '#337bff',      // border color of the circles
+                          weight: 1.5,             // circle line weight in pixels
+                          fillOpacity: 0.8  
+                        // fill opacity (0-1)
+                      }).on({
+                         mouseover: function(e) {
+                            this.openPopup();
+                            this.setStyle({fillColor: 'pink'});  // fill color turns green when mouseover
+                        },
+                        mouseout: function(e) {
+                            this.closePopup();
+                            this.setStyle({fillColor: '#33f6ff'});  // fill turns original color when mouseout 
+                         
+                        }
+                    });
+                  }
+             });    
+            
+            
+            
+          three = L.geoJson(data3, {
+
+                  // By default, Leaflet draws geojson points as simple markers
+                  // To alter this, the pointToLayer function needs to be used
+                  pointToLayer: function(feature, latlng) {
+                      return L.circleMarker(latlng, { // we use circle marker for the points
+                           radius:4,
+                          fillColor: "#ff337b",  // fill color of the circles
+                          color: '#337bff',      // border color of the circles
+                          weight: 1.5,             // circle line weight in pixels
+                          fillOpacity: 0.8       // fill opacity (0-1)
+                      }).on({
+                         mouseover: function(e) {
+                            this.openPopup();
+                            this.setStyle({fillColor: 'pink'});  // fill color turns green when mouseover
+                        },
+                        mouseout: function(e) {
+                            this.closePopup();
+                            this.setStyle({fillColor: '#ff337b'});  // fill turns original color when mouseout 
+                        
+                        }
+                    });
+                  }
+             });   
+            
+            
+            
+        four = L.geoJson(data4, {
+
+                  // By default, Leaflet draws geojson points as simple markers
+                  // To alter this, the pointToLayer function needs to be used
+                  pointToLayer: function(feature, latlng) {
+                      return L.circleMarker(latlng, { // we use circle marker for the points
+                           radius:4,
+                          fillColor: "#ffd333",  // fill color of the circles
+                          color: '#337bff',      // border color of the circles
+                          weight: 1.5,             // circle line weight in pixels
+                          fillOpacity: 0.8  // fill opacity (0-1)
+                      }).on({
+                         mouseover: function(e) {
+                            this.openPopup();
+                            this.setStyle({fillColor: 'pink'});  // fill color turns green when mouseover
+                        },
+                        mouseout: function(e) {
+                            this.closePopup();
+                            this.setStyle({fillColor: '#ffd333'});  // fill turns original color when mouseout
+                        
+                        }
+                    });
+                  }
+              });    
+            
+            
+
+
+
+var basemaps = {
+    "Light Canvas": canvas,
+    "Satellite Imagery": imagery
+};
+
+var overlaymaps = {
+    "1995-2001": one,
+    "2002-2007": two,
+    "2008-2012": three,
+    "2013-2018": four  
+   
+};
+
+    L.control.layers(basemaps, overlaymaps).addTo(map);
+            
+       var legend = L.control({position: 'topleft'}); 
+            
+        legend.onAdd = function (map) {
+
+            var div = L.DomUtil.create('div', 'legend'),
+                years = ["Found from '95+", "Found from '02+", "Found from '08+", "Found from'13+"],
+                colors = ["#c5ff33","#33f6ff", "#ff337b", "#ffd333"];
+
+            div.innerHTML = '<h4>Aquatic Invasive Species travel pattern over time</h4>'; 
+
+            // Loop through our the classes and generate a label with a color box for each interval.
+            for (var i = 0; i < colors.length; i++) {
+                div.innerHTML +=
+                '<svg height="20" width="20"><circle cx="12" cy="12" r="7" stroke="black" stroke-width="0.5" fill= ' +colors[i] +' /></svg>' +'&nbsp;'+ years[i] +'<br>';
+            }
+
+            return div;
+        };
+
+        legend.addTo(map);
+ 
+            
+            
+        
+
+        </script>
+   </body>
+</html>
